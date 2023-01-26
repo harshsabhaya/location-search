@@ -1,8 +1,13 @@
+import Maps from "./Maps";
+import SearchBox from "./SearchBox";
 
 function App() {
   return (
     <div className="App">
-      hello      
+      <Maps />
+      <div className="search-wrapper">
+        <SearchBox />
+      </div>
     </div>
   );
 }
