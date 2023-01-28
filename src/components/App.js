@@ -1,12 +1,15 @@
+import { useState } from "react";
 import Maps from "./Maps";
 import SearchBox from "./SearchBox";
 
 function App() {
+  const [selectedPosition, setSelectedPosition] = useState(null)
+
   return (
     <div className="App">
-      <Maps />
+      <Maps selectedPosition={selectedPosition}/>
       <div className="search-wrapper">
-        <SearchBox />
+        <SearchBox setSelectedPosition={setSelectedPosition}/>
       </div>
     </div>
   );

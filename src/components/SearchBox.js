@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search";
 
-const SearchBox = () => {
-    const [searchQuery, setSearchQuery] = useState("surat")
+const SearchBox = ({ setSelectedPosition }) => {
+    const [searchQuery, setSearchQuery] = useState("")
     const [locationList, setLocationList] = useState([])
+    const [focus, setFocus] = useState(false)
     useEffect(() => {
         handleSeachedApi()
-
     }, [searchQuery])
 
 
@@ -25,7 +25,12 @@ const SearchBox = () => {
             .then(json => setLocationList(json))
     }
 
-    console.log(locationList)
+    const handleSelectedLocation = (location) => () => {
+        setSelectedPosition(location)
+        setLocationList([])
+    }
+
+    console.log(focus)
     return (
         <div className='input-suggesion-wrap'>
             <input
@@ -34,12 +39,14 @@ const SearchBox = () => {
                 placeholder='Search Location'
                 onChange={e => setSearchQuery(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' ? handleSeachedApi() : null}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
             />
-            <div className='suggestion-box'>
+            {locationList?.length > 0 && focus && <div className='suggestion-box'>
                 {locationList.map(location => {
-                    const { display_name } = location
+                    const { display_name, place_id } = location
                     return (
-                        <div className='row mx-0 px-2 name-wrapper'>
+                        <div key={place_id} className='row mx-0 px-2 name-wrapper' onClick={handleSelectedLocation(location)}>
                             <div className='d-flex align-items-center justify-content-center'>
                                 <img src="./location.svg" alt="recent" className='' />
                             </div>
@@ -47,7 +54,7 @@ const SearchBox = () => {
                         </div>
                     )
                 })}
-            </div>
+            </div>}
 
         </div>
     )
