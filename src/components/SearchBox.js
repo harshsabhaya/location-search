@@ -18,11 +18,19 @@ const SearchBox = ({ setSelectedPosition }) => {
             format: "json",
             addressdetails: 1,
             polygon_geojson: 0,
+            limit: 50
         };
         const queryString = new URLSearchParams(params).toString()
         fetch(`${NOMINATIM_BASE_URL}?${queryString}`)
             .then(res => res.json())
-            .then(json => setLocationList(json))
+            .then(json => {
+                // Show only "administrative" type location
+                const administrativeResult =
+                    json?.length > 0
+                        ? json.filter(loc => loc.type === "administrative")
+                        : []
+                setLocationList(administrativeResult)
+            })
     }
 
     const handleSelectedLocation = (location) => () => {
@@ -30,7 +38,6 @@ const SearchBox = ({ setSelectedPosition }) => {
 
     }
 
-    console.log(focus)
     return (
         <div className='input-suggesion-wrap'>
             <input

@@ -34,6 +34,8 @@ code {
   width: 100%;
   margin-top: 5px;
   border-radius: 10px;
+  max-height: 80vh;
+  overflow: auto;
 }
 .input-suggesion-wrap {
   width: 50vw;
