@@ -27,7 +27,7 @@ const SearchBox = ({ setSelectedPosition }) => {
 
     const handleSelectedLocation = (location) => () => {
         setSelectedPosition(location)
-        setLocationList([])
+
     }
 
     console.log(focus)
@@ -40,7 +40,7 @@ const SearchBox = ({ setSelectedPosition }) => {
                 onChange={e => setSearchQuery(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' ? handleSeachedApi() : null}
                 onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
+                onBlur={() => setTimeout(() => setFocus(false), 100)}
             />
             {locationList?.length > 0 && focus && <div className='suggestion-box'>
                 {locationList.map(location => {

@@ -3,7 +3,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-const position = [51.505, -0.09]
+const position = [42.361145, -71.057083]
 const icon = L.icon({
     iconUrl: "./placeholder.png",
     iconSize: [38, 38],
@@ -32,7 +32,7 @@ const ResetCenterView = (props) => {
 
 const Maps = (props) => {
     const { selectedPosition } = props
-
+    const markerPosition = [selectedPosition?.lat ?? position[0], selectedPosition?.lon ?? position[1]]
     return (
         <div style={{ width: "100vw", height: "100vh" }}>
             <MapContainer
@@ -41,7 +41,7 @@ const Maps = (props) => {
                 style={{ width: "100%", height: "100%" }}
             >
                 <TileLayer url={mapType[0]} />
-                <Marker position={position} icon={icon}>
+                <Marker position={markerPosition} icon={icon}>
                     <Popup>
                         A pretty CSS3 popup. <br /> Easily customizable.
                     </Popup>
